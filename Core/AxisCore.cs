@@ -180,6 +180,11 @@ namespace LiveCharts
         /// </value>
         public double S { get; internal set; }
 
+        /// <summary>
+        /// Gets or sets the Axis fixed width.
+        /// </summary>
+        public double Width { get; set; }
+
         #endregion
 
         #region Internal Properties
