@@ -290,7 +290,7 @@ namespace LiveCharts.Wpf
             if (pbv.Shape != null)
             {
                 pbv.Shape.Fill = PointForeground;
-                pbv.Shape.Stroke = Stroke;
+                pbv.Shape.Stroke = PointStroke ?? Stroke;
                 pbv.Shape.StrokeThickness = StrokeThickness;
                 pbv.Shape.Width = PointGeometrySize;
                 pbv.Shape.Height = PointGeometrySize;

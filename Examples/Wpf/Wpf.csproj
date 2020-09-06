@@ -90,4 +90,9 @@
   <ItemGroup>
     <Folder Include="CartesianChart\CustomZoomingAndPanning\" />
   </ItemGroup>
+  <ItemGroup>
+    <Page Update="CartesianChart\PointStroke\PointStrokeExample.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
 </Project>

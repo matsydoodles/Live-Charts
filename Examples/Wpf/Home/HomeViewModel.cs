@@ -37,6 +37,7 @@ using Wpf.CartesianChart.MaterialCards;
 using Wpf.CartesianChart.Missing_Line_Points;
 using Wpf.CartesianChart.NegativeStackedRow;
 using Wpf.CartesianChart.PointState;
+using Wpf.CartesianChart.PointStroke;
 using Wpf.CartesianChart.ScatterPlot;
 using Wpf.CartesianChart.Scatter_With_Pies;
 using Wpf.CartesianChart.Sections;
@@ -124,6 +125,7 @@ namespace Wpf.Home
                         new SampleVm("Chart to Image", typeof(ChartToImageSample)),
                         new SampleVm("DataLabelTemplate", typeof(DataLabelTemplateSample)),
                         new SampleVm("Fixed Width Axis", typeof(AxisFixedWidthExample)), 
+                        new SampleVm("Point Stroke", typeof(PointStrokeExample))
                     }
                 },
                 new SampleGroupVm
