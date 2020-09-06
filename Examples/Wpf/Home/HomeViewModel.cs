@@ -9,6 +9,7 @@ using System.Windows.Data;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using Wpf.CartesianChart;
+using Wpf.CartesianChart.AxisFixedWidth;
 using Wpf.CartesianChart.BasicLine;
 using Wpf.CartesianChart.Basic_Bars;
 using Wpf.CartesianChart.Basic_Stacked_Bar;
@@ -121,7 +122,8 @@ namespace Wpf.Home
                         new SampleVm("Events", typeof(EventsExample)),
                         new SampleVm("Visual Elements", typeof(UiElementsAndEventsExample)),
                         new SampleVm("Chart to Image", typeof(ChartToImageSample)),
-                        new SampleVm("DataLabelTemplate", typeof(DataLabelTemplateSample))
+                        new SampleVm("DataLabelTemplate", typeof(DataLabelTemplateSample)),
+                        new SampleVm("Fixed Width Axis", typeof(AxisFixedWidthExample)), 
                     }
                 },
                 new SampleGroupVm
