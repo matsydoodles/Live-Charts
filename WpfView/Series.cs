@@ -504,7 +504,7 @@ namespace LiveCharts.Wpf
         {
             var wpfChart = (Chart) Model.Chart.View;
 
-            if (Stroke != null && Fill != null && PointStroke != null) return;
+            if (Stroke != null && Fill != null) return;
 
             var nextColor = wpfChart.GetNextDefaultColor();
 
@@ -520,13 +520,6 @@ namespace LiveCharts.Wpf
                 var fillBursh = new SolidColorBrush(nextColor) {Opacity = DefaultFillOpacity};
                 fillBursh.Freeze();
                 SetValue(FillProperty, fillBursh);
-            }
-
-            if (PointStroke == null)
-            {
-                var pointStroke = new SolidColorBrush(nextColor) { Opacity = DefaultFillOpacity };
-                pointStroke.Freeze();
-                SetValue(FillProperty, pointStroke);
             }
         }
 
