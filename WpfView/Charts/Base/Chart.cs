@@ -1052,9 +1052,7 @@ namespace LiveCharts.Wpf.Charts.Base
 
                 item.Title = series.Title;
                 item.StrokeThickness = series.StrokeThickness;
-
                 item.Stroke = series.PointStroke ?? series.Stroke;
-
                 item.Fill = ((Series) t) is IFondeable &&
                             !(t is IVerticalStackedAreaSeriesView ||
                               t is IStackedAreaSeriesView)
