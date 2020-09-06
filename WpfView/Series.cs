@@ -348,6 +348,22 @@ namespace LiveCharts.Wpf
         }
 
         /// <summary>
+        /// The point stroke property
+        /// </summary>
+        public static readonly DependencyProperty PointStrokeProperty = DependencyProperty.Register(
+            "PointStroke", typeof(Brush), typeof(Series),
+            new PropertyMetadata(null, CallChartUpdater()));
+
+        /// <summary>
+        /// Gets or sets series point stroke, if this property is null then the <see cref="PointStroke"/> will be that of the set value of <see cref="Stroke"/>. 
+        /// </summary>
+        public Brush PointStroke
+        {
+            get { return (Brush)GetValue(PointStrokeProperty); }
+            set { SetValue(PointStrokeProperty, value); }
+        }
+
+        /// <summary>
         /// The scales x at property
         /// </summary>
         public static readonly DependencyProperty ScalesXAtProperty = DependencyProperty.Register(
@@ -488,7 +504,7 @@ namespace LiveCharts.Wpf
         {
             var wpfChart = (Chart) Model.Chart.View;
 
-            if (Stroke != null && Fill != null) return;
+            if (Stroke != null && Fill != null && PointStroke != null) return;
 
             var nextColor = wpfChart.GetNextDefaultColor();
 
@@ -506,6 +522,12 @@ namespace LiveCharts.Wpf
                 SetValue(FillProperty, fillBursh);
             }
 
+            if (PointStroke == null)
+            {
+                var pointStroke = new SolidColorBrush(nextColor) { Opacity = DefaultFillOpacity };
+                pointStroke.Freeze();
+                SetValue(FillProperty, pointStroke);
+            }
         }
 
         /// <summary>
