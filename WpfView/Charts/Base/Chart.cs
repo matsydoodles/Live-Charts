@@ -973,6 +973,7 @@ namespace LiveCharts.Wpf.Charts.Base
                                 : ((Series) x.SeriesView).Fill,
                             Stroke = ((Series) x.SeriesView).PointStroke ?? ((Series)x.SeriesView).Stroke,
                             StrokeThickness = ((Series) x.SeriesView).StrokeThickness,
+                            StrokeDashArray = ((Series)x.SeriesView).PointStrokeDashArray ?? ((Series)x.SeriesView).StrokeDashArray,
                             Title = ((Series) x.SeriesView).Title,
                         },
                         ChartPoint = x
@@ -1053,6 +1054,7 @@ namespace LiveCharts.Wpf.Charts.Base
                 item.Title = series.Title;
                 item.StrokeThickness = series.StrokeThickness;
                 item.Stroke = series.PointStroke ?? series.Stroke;
+                item.StrokeDashArray = series.PointStrokeDashArray ?? series.StrokeDashArray;
                 item.Fill = ((Series) t) is IFondeable &&
                             !(t is IVerticalStackedAreaSeriesView ||
                               t is IStackedAreaSeriesView)

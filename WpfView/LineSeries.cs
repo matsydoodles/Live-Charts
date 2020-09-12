@@ -291,6 +291,7 @@ namespace LiveCharts.Wpf
             {
                 pbv.Shape.Fill = PointForeground;
                 pbv.Shape.Stroke = PointStroke ?? Stroke;
+                pbv.Shape.StrokeDashArray = PointStrokeDashArray ?? StrokeDashArray;
                 pbv.Shape.StrokeThickness = StrokeThickness;
                 pbv.Shape.Width = PointGeometrySize;
                 pbv.Shape.Height = PointGeometrySize;
