@@ -91,6 +91,9 @@
     <Folder Include="CartesianChart\CustomZoomingAndPanning\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Update="CartesianChart\PointStrokeDashArray\PointStrokeDashArrayExample.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="CartesianChart\PointStroke\PointStrokeExample.xaml">
       <SubType>Designer</SubType>
     </Page>

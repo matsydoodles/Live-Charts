@@ -88,7 +88,9 @@
                                         <Path Width="{Binding BulletSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType={x:Type UserControl}}}" 
                                              Height="{Binding BulletSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType={x:Type UserControl}}}" 
                                              StrokeThickness="{Binding Series.StrokeThickness}" 
-                                             Stroke="{Binding Series.Stroke}" Fill="{Binding Series.Fill}" 
+                                             Stroke="{Binding Series.Stroke}" 
+                                             StrokeDashArray="{Binding Series.StrokeDashArray}"
+                                             Fill="{Binding Series.Fill}" 
                                              Stretch="Fill" Data="{Binding Series.PointGeometry}"
                                              Visibility="{Binding ShowSeries, ElementName=Control, Converter={StaticResource Bvc}}"/>
                                         <TextBlock Grid.Column="1" Text="{Binding Series.Title}" VerticalAlignment="Center" Margin="5 0 5 0"

@@ -38,6 +38,7 @@ using Wpf.CartesianChart.Missing_Line_Points;
 using Wpf.CartesianChart.NegativeStackedRow;
 using Wpf.CartesianChart.PointState;
 using Wpf.CartesianChart.PointStroke;
+using Wpf.CartesianChart.PointStrokeDashArray;
 using Wpf.CartesianChart.ScatterPlot;
 using Wpf.CartesianChart.Scatter_With_Pies;
 using Wpf.CartesianChart.Sections;
@@ -80,7 +81,9 @@ namespace Wpf.Home
                         new SampleVm("Material Design", typeof(MaterialCards)),
                         new SampleVm("Solid Color", typeof(SolidColorExample)),
                         new SampleVm("Energy Predictions", typeof(EnergyPredictionExample)),
-                        new SampleVm("Funnel Chart", typeof(FunnelExample))
+                        new SampleVm("Funnel Chart", typeof(FunnelExample)),
+                        new SampleVm("Point Stroke", typeof(PointStrokeExample)),
+                        new SampleVm("Point StrokeDashArray", typeof(PointStrokeDashArrayExample)) 
                     }
                 },
                 new SampleGroupVm
@@ -124,8 +127,7 @@ namespace Wpf.Home
                         new SampleVm("Visual Elements", typeof(UiElementsAndEventsExample)),
                         new SampleVm("Chart to Image", typeof(ChartToImageSample)),
                         new SampleVm("DataLabelTemplate", typeof(DataLabelTemplateSample)),
-                        new SampleVm("Fixed Width Axis", typeof(AxisFixedWidthExample)), 
-                        new SampleVm("Point Stroke", typeof(PointStrokeExample))
+                        new SampleVm("Fixed Width Axis", typeof(AxisFixedWidthExample))
                     }
                 },
                 new SampleGroupVm

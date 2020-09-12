@@ -433,6 +433,12 @@ namespace LiveCharts.Wpf
         /// Series Stroke thickness
         /// </summary>
         public double StrokeThickness { get; set; }
+
+        /// <summary>
+        /// Series Stroke Dash Array
+        /// </summary>
+        public DoubleCollection StrokeDashArray { get; set; }
+        
         /// <summary>
         /// Series Fill
         /// </summary>

@@ -364,6 +364,21 @@ namespace LiveCharts.Wpf
         }
 
         /// <summary>
+        /// The stroke dash array property
+        /// </summary>
+        public static readonly DependencyProperty PointStrokeDashArrayProperty = DependencyProperty.Register(
+            "PointStrokeDashArray", typeof(DoubleCollection), typeof(Series),
+            new PropertyMetadata(null));
+        /// <summary>
+        /// Gets or sets the stroke dash array of a series, sue this property to draw dashed strokes
+        /// </summary>
+        public DoubleCollection PointStrokeDashArray
+        {
+            get { return (DoubleCollection)GetValue(PointStrokeDashArrayProperty); }
+            set { SetValue(PointStrokeDashArrayProperty, value); }
+        }
+
+        /// <summary>
         /// The scales x at property
         /// </summary>
         public static readonly DependencyProperty ScalesXAtProperty = DependencyProperty.Register(
