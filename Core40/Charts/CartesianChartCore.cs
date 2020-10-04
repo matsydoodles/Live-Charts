@@ -265,15 +265,39 @@ namespace LiveCharts.Charts
         {
             if (!View.ActualSeries.Any(x => x is IStackedColumnSeriesView)) return;
 
-            var isPercentage =
-                View.ActualSeries.Any(x => x is IStackModelableSeriesView && x is IStackedColumnSeriesView &&
-                                           ((IStackModelableSeriesView) x).StackMode == StackMode.Percentage);
+            var alwaysShowLabels = false;
+            var stackMode = StackMode.Values;
+            foreach (var series in View.ActualSeries)
+            {
+                if (!(series is IStackModelableSeriesView) || !(series is IStackedColumnSeriesView)) continue;
+
+                var stackedColumnSeriesView = (IStackedColumnSeriesView)series;
+                if (stackedColumnSeriesView.AlwaysShowLabels)
+                {
+                    alwaysShowLabels = true;
+                }
+
+                var stackModelableSeriesView = (IStackModelableSeriesView) series;
+                if (stackModelableSeriesView.StackMode != StackMode.Values)
+                {
+                    stackMode = stackModelableSeriesView.StackMode;
+                }
+
+                if (FoundWorstCase(alwaysShowLabels, stackMode))
+                {
+                    break;
+                }
+            }
 
             foreach (var group in View.ActualSeries.OfType<IStackedColumnSeriesView>().GroupBy(x => x.ScalesYAt))
             {
-                StackPoints(group, AxisOrientation.Y, group.Key, isPercentage
-                    ? StackMode.Percentage : StackMode.Values);
+                StackPoints(group, AxisOrientation.Y, group.Key, stackMode, alwaysShowLabels);
             }
+        }
+
+        private bool FoundWorstCase(bool alwaysShowLabels, StackMode stackMode)
+        {
+            return alwaysShowLabels && stackMode == StackMode.Percentage;
         }
 
         private void PrepareStackedRows()
