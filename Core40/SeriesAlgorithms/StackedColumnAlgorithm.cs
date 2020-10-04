@@ -21,11 +21,11 @@
 //SOFTWARE.
 
 using System;
+using System.Linq;
 using LiveCharts.Defaults;
 using LiveCharts.Definitions.Points;
 using LiveCharts.Definitions.Series;
 using LiveCharts.Dtos;
-using System.Linq;
 
 namespace LiveCharts.SeriesAlgorithms
 {
@@ -95,7 +95,7 @@ namespace LiveCharts.SeriesAlgorithms
 
                 chartPoint.View = View.GetPointView(chartPoint,
                     View.DataLabels
-                        ? (chartPoint.Participation > 0.05
+                        ? (chartPoint.Participation >= 0.05
                             ? View.GetLabelPointFormatter()(chartPoint)
                             : string.Empty)
                         : null);

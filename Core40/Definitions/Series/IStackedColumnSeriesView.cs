@@ -36,6 +36,7 @@ namespace LiveCharts.Definitions.Series
         /// The maximum width of the column.
         /// </value>
         double MaxColumnWidth { get; set; }
+
         /// <summary>
         /// Gets or sets the column padding.
         /// </summary>
@@ -43,5 +44,13 @@ namespace LiveCharts.Definitions.Series
         /// The column padding.
         /// </value>
         double ColumnPadding { get; set; }
+
+        /// <summary>
+        /// Gets or sets always show labels.
+        /// </summary>
+        /// <value>
+        /// The always show labels value.
+        /// </value>
+        bool AlwaysShowLabels { get; set; }
     }
 }

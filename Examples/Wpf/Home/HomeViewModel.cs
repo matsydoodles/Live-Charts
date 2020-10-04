@@ -83,7 +83,8 @@ namespace Wpf.Home
                         new SampleVm("Energy Predictions", typeof(EnergyPredictionExample)),
                         new SampleVm("Funnel Chart", typeof(FunnelExample)),
                         new SampleVm("Point Stroke", typeof(PointStrokeExample)),
-                        new SampleVm("Point StrokeDashArray", typeof(PointStrokeDashArrayExample)) 
+                        new SampleVm("Point StrokeDashArray", typeof(PointStrokeDashArrayExample)),
+                        new SampleVm("Always Show Labels", typeof(StackedColumnAlwaysShowLabelExample))
                     }
                 },
                 new SampleGroupVm

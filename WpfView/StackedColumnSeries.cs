@@ -68,6 +68,24 @@ namespace LiveCharts.Wpf
         #region Properties
 
         /// <summary>
+        ///   Option to always show the labels for a stack column series.
+        /// </summary>
+        /// <remarks>
+        ///   N.B. This will force the graph to not be percentage accurate.
+        /// </remarks>
+        public static readonly DependencyProperty AlwaysShowLabelsProperty = DependencyProperty.Register(
+            "AlwaysShowLabels", typeof(bool), typeof(StackedColumnSeries), new PropertyMetadata(default(bool)));
+
+        /// <summary>
+        ///   Gets or sets the always show labels property.
+        /// </summary>
+        public bool AlwaysShowLabels
+        {
+            get { return (bool)GetValue(AlwaysShowLabelsProperty); }
+            set { SetValue(AlwaysShowLabelsProperty, value); }
+        }
+
+        /// <summary>
         /// The maximum column width property
         /// </summary>
         public static readonly DependencyProperty MaxColumnWidthProperty = DependencyProperty.Register(

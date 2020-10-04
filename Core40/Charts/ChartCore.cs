@@ -585,8 +585,12 @@ namespace LiveCharts.Charts
         /// <param name="stackAt">The stack at.</param>
         /// <param name="stackIndex">Index of the stack.</param>
         /// <param name="mode">The mode.</param>
-        protected void StackPoints(IEnumerable<ISeriesView> stackables, AxisOrientation stackAt, int stackIndex,
-            StackMode mode = StackMode.Values)
+        /// <param name="showLabels">Should force space for labels.</param>
+        protected void StackPoints(IEnumerable<ISeriesView> stackables,
+                                   AxisOrientation stackAt,
+                                   int stackIndex,
+                                   StackMode mode = StackMode.Values,
+                                   bool showLabels = false)
         {
             var groupedStackables = stackables.GroupBy(s => (s as IGroupedStackedSeriesView)?.Grouping).ToList();
 
@@ -657,6 +661,83 @@ namespace LiveCharts.Charts
                         }
                     }
 
+                    if (showLabels)
+                    {
+                        var keyToSize = new Dictionary<int, double>();
+                        var keyToReSize = new HashSet<int>();
+                        var sum = 0.0d;
+                        var index = 0;
+                        foreach (var point in column)
+                        {
+                            var size = point.To - point.From;
+                            keyToSize.Add(index, size);
+                            if (point.Participation < 0.05 && point.Participation > 0.0)
+                            {
+                                keyToReSize.Add(index);
+                            }
+
+                            if (point.Sum > sum)
+                            {
+                                sum = point.Sum;
+                            }
+
+                            index++;
+                        }
+
+                        if (keyToReSize.Any())
+                        {
+                            var sizeNeededForParticipation = (sum / 100) * 5.1;
+                            var totalSizeNeeded = keyToReSize.Sum(key => sizeNeededForParticipation - keyToSize[key]);
+
+                            var keysThatCanResize = new HashSet<int>();
+                            foreach (var kvp in keyToSize.Where(kvp => kvp.Value - sizeNeededForParticipation > sizeNeededForParticipation && kvp.Value > totalSizeNeeded))
+                            {
+                                keysThatCanResize.Add(kvp.Key);
+                            }
+
+                            if (keysThatCanResize.Any())
+                            {
+                                var keysToPlayWith = keysThatCanResize.Count;
+                                var valueToRemoveFromEach = totalSizeNeeded / keysToPlayWith;
+
+                                var lastPointHasChanged = false;
+                                ChartPoint lastPointThatChanged = null;
+                                var key = 0;
+                                foreach (var point in column)
+                                {
+                                    if (lastPointHasChanged)
+                                    {
+                                        point.To = lastPointThatChanged.To + keyToSize[key];
+                                        point.From = lastPointThatChanged.To;
+                                    }
+
+                                    if (keyToReSize.Contains(key))
+                                    {
+                                        var toAdd = sizeNeededForParticipation - (point.To - point.From);
+                                        point.To += toAdd;
+
+                                        lastPointHasChanged = true;
+                                    }
+
+                                    if (keysThatCanResize.Contains(key))
+                                    {
+                                        point.To -= valueToRemoveFromEach;
+
+                                        lastPointHasChanged = true;
+                                    }
+
+                                    point.Participation = (point.To - point.From) / point.Sum;
+                                    point.Participation = double.IsNaN(point.Participation)
+                                        ? 0
+                                        : point.Participation;
+
+                                    lastPointThatChanged = point;
+                                    key++;
+                                }
+                            }
+                        }
+                    }
+
                     if (sumLeft < mostLeft) mostLeft = sumLeft;
                     if (sumRight > mostRight) mostRight = sumRight;
                 }
@@ -716,45 +797,45 @@ namespace LiveCharts.Charts
         }
         #endregion
 
-        #region Privates
-        private static void SetAxisLimits(AxisCore ax, IList<ISeriesView> series, AxisOrientation orientation)
-        {
-            var first = new CoreLimit();
-            var firstR = 0d;
+                #region Privates
+                private static void SetAxisLimits(AxisCore ax, IList<ISeriesView> series, AxisOrientation orientation)
+                {
+                    var first = new CoreLimit();
+                    var firstR = 0d;
 
-            if (series.Count > 0)
-            {
-                first = orientation == AxisOrientation.X
-                    ? series[0].Values.GetTracker(series[0]).XLimit
-                    : series[0].Values.GetTracker(series[0]).YLimit;
-                var view = series[0] as IAreaPoint;
-                firstR = view != null ? view.GetPointDiameter() : 0;
-            }
+                    if (series.Count > 0)
+                    {
+                        first = orientation == AxisOrientation.X
+                            ? series[0].Values.GetTracker(series[0]).XLimit
+                            : series[0].Values.GetTracker(series[0]).YLimit;
+                        var view = series[0] as IAreaPoint;
+                        firstR = view != null ? view.GetPointDiameter() : 0;
+                    }
             
-            //                     [ max, min, pointRadius ]
-            var boundries = new[] {first.Max, first.Min, firstR};
+                    //                     [ max, min, pointRadius ]
+                    var boundries = new[] {first.Max, first.Min, firstR};
 
-            for (var index = 1; index < series.Count; index++)
-            {
-                var seriesView = series[index];
-                var tracker = seriesView.Values.GetTracker(seriesView);
-                var limit = orientation == AxisOrientation.X ? tracker.XLimit : tracker.YLimit;
-                var view = seriesView as IAreaPoint;
-                var radius = view != null ? view.GetPointDiameter() : 0;
+                    for (var index = 1; index < series.Count; index++)
+                    {
+                        var seriesView = series[index];
+                        var tracker = seriesView.Values.GetTracker(seriesView);
+                        var limit = orientation == AxisOrientation.X ? tracker.XLimit : tracker.YLimit;
+                        var view = seriesView as IAreaPoint;
+                        var radius = view != null ? view.GetPointDiameter() : 0;
 
-                if (limit.Max > boundries[0]) boundries[0] = limit.Max;
-                if (limit.Min < boundries[1]) boundries[1] = limit.Min;
-                if (radius > boundries[2]) boundries[2] = radius;
+                        if (limit.Max > boundries[0]) boundries[0] = limit.Max;
+                        if (limit.Min < boundries[1]) boundries[1] = limit.Min;
+                        if (radius > boundries[2]) boundries[2] = radius;
+                    }
+
+                    ax.TopSeriesLimit = boundries[0];
+                    ax.BotSeriesLimit = boundries[1];
+
+                    ax.TopLimit = double.IsNaN(ax.MaxValue) ? boundries[0] : ax.MaxValue;
+                    ax.BotLimit = double.IsNaN(ax.MinValue) ? boundries[1] : ax.MinValue;
+
+                    ax.MaxPointRadius = boundries[2];
+                }
+                #endregion
             }
-
-            ax.TopSeriesLimit = boundries[0];
-            ax.BotSeriesLimit = boundries[1];
-
-            ax.TopLimit = double.IsNaN(ax.MaxValue) ? boundries[0] : ax.MaxValue;
-            ax.BotLimit = double.IsNaN(ax.MinValue) ? boundries[1] : ax.MinValue;
-
-            ax.MaxPointRadius = boundries[2];
-        }
-        #endregion
-    }
 }
